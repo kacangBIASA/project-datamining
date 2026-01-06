@@ -431,7 +431,10 @@ else:
             "Previous_Scores": ps,
             "Tutoring_Sessions": ts,
             "Physical_Activity": pa
-        }])[CLASS_FEATURES]
+    }])
+
+    # paksa urutan kolom sama dengan training
+    X_input = X_input[CLASS_FEATURES]
 
     pred = int(model.predict(X_input)[0])
     st.success("Hasil: **Lulus** ✅" if pred == 1 else "Hasil: **Tidak Lulus** ❌")
