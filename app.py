@@ -69,10 +69,11 @@ def prepare_numeric(df: pd.DataFrame) -> pd.DataFrame:
 
 def make_status_lulus(df: pd.DataFrame) -> pd.DataFrame:
     out = df.copy()
-    out["Status_Lulus_Text"] = out["Exam_Score"].apply(lambda x: "Lulus" if x >= 65 else "Tidak Lulus")
-    le = LabelEncoder()
-    out["Status_Lulus"] = le.fit_transform(out["Status_Lulus_Text"])  # 0=Tidak Lulus, 1=Lulus
+    # 1 = Lulus, 0 = Tidak Lulus (mapping eksplisit, gak bisa kebalik)
+    out["Status_Lulus"] = (out["Exam_Score"] >= 65).astype(int)
+    out["Status_Lulus_Text"] = np.where(out["Status_Lulus"] == 1, "Lulus", "Tidak Lulus")
     return out
+
 
 
 def fig_bar_counts(labels, counts, title, xlabel, ylabel):
@@ -431,8 +432,8 @@ else:
             "Tutoring_Sessions": ts,
             "Physical_Activity": pa
         }])
-        pred = int(model.predict(X_input)[0])
-        st.success("Hasil: **Lulus** ✅" if pred == 1 else "Hasil: **Tidak Lulus** ❌")
+    pred = int(model.predict(X_input)[0])
+    st.success("Hasil: **Lulus** ✅" if pred == 1 else "Hasil: **Tidak Lulus** ❌")
 
     st.markdown("---")
     st.markdown("#### Data Lengkap + Label (Semua Kolom)")
