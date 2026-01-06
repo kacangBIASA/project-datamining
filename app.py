@@ -450,13 +450,13 @@ else:
         mime="text/csv",
     )
 
-    st.markdown("#### Contoh Input yang Diprediksi Lulus oleh Model")
+    # st.markdown("#### Contoh Input yang Diprediksi Lulus oleh Model")
 
-    pred_all = model.predict(df_with_label[CLASS_FEATURES])
-    contoh_lulus = df_with_label.loc[pred_all == 1, CLASS_FEATURES].head(10)
+    # pred_all = model.predict(df_with_label[CLASS_FEATURES])
+    # contoh_lulus = df_with_label.loc[pred_all == 1, CLASS_FEATURES].head(10)
 
-    if len(contoh_lulus) == 0:
-        st.warning("Model tidak menemukan contoh yang diprediksi Lulus (jarang terjadi).")
-    else:
-        st.dataframe(contoh_lulus, use_container_width=True)
-        st.caption("Copy salah satu baris di atas ke input manual untuk demo hasil 'Lulus'.")
+    # if len(contoh_lulus) == 0:
+    #     st.warning("Model tidak menemukan contoh yang diprediksi Lulus (jarang terjadi).")
+    # else:
+    #     st.dataframe(contoh_lulus, use_container_width=True)
+    #     st.caption("Copy salah satu baris di atas ke input manual untuk demo hasil 'Lulus'.")
