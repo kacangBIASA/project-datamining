@@ -423,8 +423,6 @@ else:
         ts = st.number_input("Tutoring_Sessions", min_value=0.0, max_value=float(df["Tutoring_Sessions"].max()), value=float(df["Tutoring_Sessions"].median()))
         pa = st.number_input("Physical_Activity", min_value=0.0, max_value=float(df["Physical_Activity"].max()), value=float(df["Physical_Activity"].median()))
 
-    X_input = None
-
     if st.button("Prediksi Status Kelulusan"):
         X_input = pd.DataFrame([{
             "Hours_Studied": hs,
@@ -437,7 +435,6 @@ else:
 
     pred = int(model.predict(X_input)[0])
     st.success("Hasil: **Lulus** ✅" if pred == 1 else "Hasil: **Tidak Lulus** ❌")
-
 
     st.markdown("---")
     st.markdown("#### Data Lengkap + Label (Semua Kolom)")
