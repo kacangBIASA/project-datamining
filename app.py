@@ -432,3 +432,33 @@ else:
             "Tutoring_Sessions": ts,
             "Physical_Activity": pa
     }])
+
+    # paksa urutan kolom sama persis seperti training
+    X_input = X_input[CLASS_FEATURES]
+
+    pred = int(model.predict(X_input)[0])
+    st.success("Hasil: **Lulus** ✅" if pred == 1 else "Hasil: **Tidak Lulus** ❌")
+
+
+    st.markdown("---")
+    st.markdown("#### Data Lengkap + Label (Semua Kolom)")
+    st.dataframe(df_with_label, use_container_width=True, height=420)
+
+    csv_bytes = df_with_label.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        "⬇️ Download Data + Label (CSV)",
+        data=csv_bytes,
+        file_name="student_performance_with_label.csv",
+        mime="text/csv",
+    )
+
+    st.markdown("#### Contoh Input yang Diprediksi Lulus oleh Model")
+
+    pred_all = model.predict(df_with_label[CLASS_FEATURES])
+    contoh_lulus = df_with_label.loc[pred_all == 1, CLASS_FEATURES].head(10)
+
+    if len(contoh_lulus) == 0:
+        st.warning("Model tidak menemukan contoh yang diprediksi Lulus (jarang terjadi).")
+    else:
+        st.dataframe(contoh_lulus, use_container_width=True)
+        st.caption("Copy salah satu baris di atas ke input manual untuk demo hasil 'Lulus'.")
